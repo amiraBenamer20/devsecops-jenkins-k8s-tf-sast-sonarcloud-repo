@@ -5,9 +5,15 @@ pipeline {
     }
    stages{
     stage('CompileandRunSonarAnalysis') {
+            environment {
+                SONAR_TOKEN = credentials('sonarcloud') // Use the credential ID here
+                  }
             steps {	
-		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=asmbuggywebapp -Dsonar.organization=asmbuggywebapp -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=sonarcloud'
+		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=asmbuggywebapp -Dsonar.organization=asmbuggywebapp -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=${SONAR_TOKEN}'
 			}
         } 
   }
 }
+
+
+
